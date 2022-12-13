@@ -18,7 +18,12 @@ const twoFa = new mongoose.Schema({
   time: {
     type: Date,
     required: true,
-    unique: true,
+  },
+  loginId: {
+    type: String,
+    required: true,
+    min: 4,
+    max: 255,
   },
 });
 

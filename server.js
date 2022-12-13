@@ -9,6 +9,7 @@ const cookieParser = require("cookie-parser");
 const loginRoute = require("./routes/auth/login");
 const twoFaPage = require("./routes/auth/2faPage");
 const verifyTwoFaRoute = require("./routes/auth/verifyFa");
+const verifyPagesRoute = require("./routes/auth/verifyPages");
 
 // body parsing
 app.use(express.json());
@@ -56,6 +57,8 @@ app.use("/api/login", loginRoute);
 app.use("/api/twofapage", twoFaPage);
 // verify 2fa code
 app.use("/api/twofacode", verifyTwoFaRoute);
+// verify pages
+app.use("/api/verifypages", verifyPagesRoute);
 
 app.listen(process.env.PORT, () =>
   console.log(`app listen on port ${process.env.PORT}`)

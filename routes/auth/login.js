@@ -74,7 +74,9 @@ loginRoute.post("/", async (req, res) => {
       temp_hash: tempHash,
       temp_code: code,
       time: new Date().getTime(),
+      loginId: loginDetails._id,
     });
+
     try {
       await newTwoFa.save();
     } catch (error) {
