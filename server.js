@@ -2,12 +2,19 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 const cors = require("cors");
+const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 
 // routes
 const loginRoute = require("./routes/auth/login");
+const twoFaPage = require("./routes/auth/2faPage");
+const verifyTwoFaRoute = require("./routes/auth/verifyFa");
 
 // body parsing
 app.use(express.json());
+
+// cookies
+app.use(cookieParser());
 
 // cors
 app.use(
@@ -29,12 +36,26 @@ app.use((req, res, next) => {
   next();
 });
 
+// connect mongoose
+mongoose.set("strictQuery", false);
+mongoose.connect(process.env.DB_URI, {}, (err) => {
+  if (err) {
+    console.log(err);
+  } else {
+    console.log("connected to db");
+  }
+});
+
 app.get("/", (req, res) => {
   res.status(200).send("Server up");
 });
 
 // login
 app.use("/api/login", loginRoute);
+// 2fa page check
+app.use("/api/twofapage", twoFaPage);
+// verify 2fa code
+app.use("/api/twofacode", verifyTwoFaRoute);
 
 app.listen(process.env.PORT, () =>
   console.log(`app listen on port ${process.env.PORT}`)
