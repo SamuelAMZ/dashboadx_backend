@@ -20,15 +20,15 @@ verifyPagesRoute.get("/", async (req, res) => {
     if (err) {
       return res.status(400).json({ message: "not login", code: "bad" });
     }
-    // see if userid is dound in db
+    // see if login is found in db
     const foundedUser = await login.findById(decodedToken.id);
 
     if (!foundedUser) {
       return res.status(400).json({ message: "not login", code: "bad" });
     }
+    // send success
+    return res.status(200).json({ message: "user login", code: "ok" });
   });
-  // send success
-  return res.status(200).json({ message: "user login", code: "ok" });
 });
 
 module.exports = verifyPagesRoute;
